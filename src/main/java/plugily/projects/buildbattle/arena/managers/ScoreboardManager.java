@@ -28,9 +28,8 @@ import plugily.projects.minigamesbox.api.user.IUser;
 import plugily.projects.minigamesbox.classic.arena.PluginArena;
 import plugily.projects.minigamesbox.classic.arena.managers.PluginScoreboardManager;
 import plugily.projects.minigamesbox.classic.handlers.language.MessageBuilder;
-import plugily.projects.minigamesbox.classic.utils.scoreboard.common.EntryBuilder;
-import plugily.projects.minigamesbox.classic.utils.scoreboard.type.Entry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,8 +46,8 @@ public class ScoreboardManager extends PluginScoreboardManager {
   }
 
   @Override
-  public List<Entry> formatScoreboard(IUser user) {
-    EntryBuilder builder = new EntryBuilder();
+  public List<String> formatScoreboard(IUser user) {
+    List<String> builder = new ArrayList<>();
     List<String> lines;
     IPluginArena userArena = user.getArena();
 
@@ -85,9 +84,8 @@ public class ScoreboardManager extends PluginScoreboardManager {
     Player player = user.getPlayer();
 
     for(String line : lines) {
-      builder.next(new MessageBuilder(line).player(player).arena(arena).build());
+      builder.add(new MessageBuilder(line).player(player).arena(arena).build());
     }
-    return builder.build();
+    return builder;
   }
-
 }
