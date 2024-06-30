@@ -20,8 +20,6 @@
  */
 
 plugins {
-    id("signing")
-    `maven-publish`
     id("com.github.johnrengelman.shadow") version "8.1.1"
     java
 }
@@ -40,7 +38,7 @@ repositories {
 
 
 dependencies {
-    implementation(files("libs/MiniGamesBox-Classic-1.3.10.jar"))
+    implementation(files("libs/MiniGamesBox-Classic-1.3.10.jar")) { isTransitive = false }
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("net.citizensnpcs:citizensapi:2.0.31-SNAPSHOT")
@@ -75,34 +73,5 @@ tasks {
 
     javadoc {
         options.encoding = "UTF-8"
-    }
-
-}
-
-
-
-publishing {
-    repositories {
-        maven {
-            name = "Releases"
-            url = uri("https://maven.plugily.xyz/releases")
-            credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
-            }
-        }
-        maven {
-            name = "Snapshots"
-            url = uri("https://maven.plugily.xyz/snapshots")
-            credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
-            }
-        }
-    }
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
     }
 }
